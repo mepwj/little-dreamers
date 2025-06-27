@@ -57,26 +57,39 @@ const ModernMap = ({ stores, userLocation, onStoreSelect, selectedStore }) => {
 
   // 카카오맵 초기화
   useEffect(() => {
-    if (!window.kakao || !window.kakao.maps) {
-      const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY || '6022b3ea363825dba0253bc58c3f328c'}&autoload=false`;
-      script.async = true;
-      
-      script.onload = () => {
-        window.kakao.maps.load(() => {
-          setMapLoaded(true);
-        });
-      };
-      
-      document.head.appendChild(script);
-    } else {
+    console.log('카카오맵 초기화 시작');
+    console.log('window.kakao 존재:', !!window.kakao);
+    console.log('window.kakao.maps 존재:', !!(window.kakao && window.kakao.maps));
+    
+    // 카카오맵이 이미 로드되어 있는지 확인
+    if (window.kakao && window.kakao.maps) {
+      console.log('카카오맵 이미 로드됨');
       setMapLoaded(true);
+    } else {
+      // 카카오맵이 아직 로드되지 않았다면 잠시 기다린 후 재시도
+      console.log('카카오맵 로딩 대기 중...');
+      const checkKakao = setInterval(() => {
+        if (window.kakao && window.kakao.maps) {
+          console.log('카카오맵 로드 완료');
+          setMapLoaded(true);
+          clearInterval(checkKakao);
+        }
+      }, 100);
+      
+      // 10초 후 타임아웃
+      setTimeout(() => {
+        clearInterval(checkKakao);
+        console.error('카카오맵 로딩 타임아웃');
+      }, 10000);
     }
   }, []);
 
   // 지도 생성
   useEffect(() => {
+    console.log('지도 생성 조건 확인:', { mapLoaded, mapRef: !!mapRef.current, userLocation });
     if (!mapLoaded || !mapRef.current || !userLocation) return;
+    
+    console.log('지도 생성 시작');
 
     const { kakao } = window;
     const container = mapRef.current;
