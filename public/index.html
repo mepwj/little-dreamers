@@ -44,7 +44,9 @@
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" rel="stylesheet">
 
     <!-- Kakao Maps SDK -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6022b3ea363825dba0253bc58c3f328c&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=6022b3ea363825dba0253bc58c3f328c&libraries=services,clusterer,drawing" 
+            onload="console.log('카카오맵 스크립트 로드 성공')" 
+            onerror="console.error('카카오맵 스크립트 로드 실패')"></script>
     
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">

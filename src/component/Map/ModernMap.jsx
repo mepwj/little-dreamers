@@ -204,6 +204,36 @@ const ModernMap = ({ stores, userLocation, onStoreSelect, selectedStore }) => {
     mapInstanceRef.current.panTo(position);
   }, [selectedStore]);
 
+  // 카카오맵이 로드되지 않은 경우 대체 UI 표시
+  if (!mapLoaded) {
+    return (
+      <MapContainer>
+        <LoadingContainer>
+          <LoadingText>🗺️ 지도를 불러오는 중...</LoadingText>
+          <LoadingSubtext>카카오맵 API 로딩 중입니다</LoadingSubtext>
+          {userLocation && (
+            <LocationInfo>
+              📍 위치: 제주도 ({userLocation.latitude.toFixed(4)}, {userLocation.longitude.toFixed(4)})
+            </LocationInfo>
+          )}
+          <StoreList>
+            <StoreListTitle>📍 주변 가맹점 ({stores.length}개)</StoreListTitle>
+            {stores.slice(0, 5).map(store => (
+              <StoreItem key={store.id} onClick={() => onStoreSelect && onStoreSelect(store)}>
+                <StoreName>{store.name}</StoreName>
+                <StoreCategory>{store.category}</StoreCategory>
+                <StoreAddress>{store.address}</StoreAddress>
+              </StoreItem>
+            ))}
+            {stores.length > 5 && (
+              <MoreStores>... 외 {stores.length - 5}개 가맹점</MoreStores>
+            )}
+          </StoreList>
+        </LoadingContainer>
+      </MapContainer>
+    );
+  }
+
   return (
     <MapContainer>
       <MapElement ref={mapRef} />
@@ -300,4 +330,89 @@ const InfoText = styled.div`
   color: ${props => props.theme.colors.neutral[600]};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.5s ease;
+`;
+
+// 로딩 UI 스타일
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 20px;
+  text-align: center;
+`;
+
+const LoadingText = styled.h2`
+  font-size: ${props => props.theme.typography.fontSize.xl};
+  font-weight: ${props => props.theme.typography.fontWeight.semibold};
+  color: ${props => props.theme.colors.neutral[700]};
+  margin-bottom: 8px;
+`;
+
+const LoadingSubtext = styled.p`
+  font-size: ${props => props.theme.typography.fontSize.sm};
+  color: ${props => props.theme.colors.neutral[500]};
+  margin-bottom: 24px;
+`;
+
+const LocationInfo = styled.div`
+  padding: 12px 16px;
+  background: ${props => props.theme.colors.primary.main};
+  color: white;
+  border-radius: 8px;
+  font-size: ${props => props.theme.typography.fontSize.sm};
+  margin-bottom: 24px;
+`;
+
+const StoreList = styled.div`
+  width: 100%;
+  max-width: 400px;
+`;
+
+const StoreListTitle = styled.h3`
+  font-size: ${props => props.theme.typography.fontSize.lg};
+  font-weight: ${props => props.theme.typography.fontWeight.semibold};
+  color: ${props => props.theme.colors.neutral[700]};
+  margin-bottom: 16px;
+`;
+
+const StoreItem = styled.div`
+  padding: 12px 16px;
+  background: white;
+  border: 1px solid ${props => props.theme.colors.neutral[200]};
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: ${props => props.theme.colors.primary.main};
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+`;
+
+const StoreName = styled.div`
+  font-weight: ${props => props.theme.typography.fontWeight.semibold};
+  color: ${props => props.theme.colors.neutral[800]};
+  margin-bottom: 4px;
+`;
+
+const StoreCategory = styled.div`
+  font-size: ${props => props.theme.typography.fontSize.sm};
+  color: ${props => props.theme.colors.primary.main};
+  margin-bottom: 4px;
+`;
+
+const StoreAddress = styled.div`
+  font-size: ${props => props.theme.typography.fontSize.xs};
+  color: ${props => props.theme.colors.neutral[500]};
+`;
+
+const MoreStores = styled.div`
+  text-align: center;
+  padding: 12px;
+  color: ${props => props.theme.colors.neutral[500]};
+  font-size: ${props => props.theme.typography.fontSize.sm};
 `;
