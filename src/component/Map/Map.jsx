@@ -13,59 +13,24 @@ export default function Map({ filteredData, onMarkerClick }) {
   });
 
   useEffect(() => {
-    // 데모 환경에서는 제주도 위치 사용
+    // 데모 버전: 항상 제주도 위치 사용
     const jejuLocation = {
       lat: 33.4890,
       lng: 126.5349
     };
 
-    // 개발 환경에서는 항상 제주도 좌표 사용
-    if (process.env.NODE_ENV === 'development') {
-      console.log("데모 환경: 제주도 위치 사용");
-      setPosition({
-        center: jejuLocation,
-        errMsg: null,
-        isLoading: false,
-      });
-      return;
-    }
-
-    // 프로덕션에서만 실제 위치 사용
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          setPosition({
-            center: {
-              lat: latitude,
-              lng: longitude,
-            },
-            errMsg: null,
-            isLoading: false,
-          });
-        },
-        (err) => {
-          console.log("위치 가져오기 실패, 제주도 기본 위치 사용");
-          setPosition({
-            center: jejuLocation,
-            errMsg: null,
-            isLoading: false,
-          });
-        }
-      );
-    } else {
-      setPosition({
-        center: jejuLocation,
-        errMsg: null,
-        isLoading: false,
-      });
-    }
+    console.log("데모 버전: 제주도 위치 사용");
+    setPosition({
+      center: jejuLocation,
+      errMsg: null,
+      isLoading: false,
+    });
   }, []);
 
   useEffect(() => {
     if (!position.isLoading) {
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=6022b3ea363825dba0253bc58c3f328c&libraries=services`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY || '6022b3ea363825dba0253bc58c3f328c'}&libraries=services`;
       script.async = true;
       document.head.appendChild(script);
 
