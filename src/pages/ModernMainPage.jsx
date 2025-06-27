@@ -39,27 +39,12 @@ const ModernMainPage = () => {
 
   // 사용자 위치 가져오기
   useEffect(() => {
-    // 개발 환경에서는 항상 제주도 좌표 사용
+    // 데모 버전: 항상 제주도 좌표 사용
     const defaultLocation = { latitude: 33.4890, longitude: 126.5349 };
     
-    if (navigator.geolocation && process.env.NODE_ENV === 'production') {
-      navigator.geolocation.getCurrentPosition(
-        ({ coords: { latitude, longitude } }) => {
-          setUserLocation({ latitude, longitude });
-          fetchStoresData(latitude, longitude);
-        },
-        (error) => {
-          console.error("위치 정보 가져오기 실패:", error);
-          setUserLocation(defaultLocation);
-          fetchStoresData(defaultLocation.latitude, defaultLocation.longitude);
-        }
-      );
-    } else {
-      // 개발 환경이거나 위치 서비스가 없는 경우 제주도 기본 위치 사용
-      console.log("개발 환경: 제주도 기본 위치 사용");
-      setUserLocation(defaultLocation);
-      fetchStoresData(defaultLocation.latitude, defaultLocation.longitude);
-    }
+    console.log("데모 버전: 제주도 기본 위치 사용");
+    setUserLocation(defaultLocation);
+    fetchStoresData(defaultLocation.latitude, defaultLocation.longitude);
   }, [fetchStoresData]);
 
   // 필터링 로직

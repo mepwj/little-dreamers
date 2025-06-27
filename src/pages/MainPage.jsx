@@ -137,35 +137,11 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    // 개발 환경에서는 항상 제주도 좌표 사용
+    // 데모 버전: 항상 제주도 좌표 사용
     const defaultLocation = { latitude: 33.4890, longitude: 126.5349 };
     
-    const handleLocationError = (error) => {
-      const errorMessages = {
-        1: "User denied the request for Geolocation.",
-        2: "Location information is unavailable.",
-        3: "The request to get user location timed out.",
-        0: "An unknown error occurred.",
-      };
-      console.error(errorMessages[error.code] || errorMessages[0]);
-      fetchStoresData(defaultLocation.latitude, defaultLocation.longitude);
-    };
-
-    const handleLocationSuccess = ({ coords: { latitude, longitude } }) => {
-      console.log("User location obtained:", { latitude, longitude });
-      fetchStoresData(latitude, longitude);
-    };
-
-    if (navigator.geolocation && process.env.NODE_ENV === 'production') {
-      navigator.geolocation.getCurrentPosition(
-        handleLocationSuccess,
-        handleLocationError
-      );
-    } else {
-      // 개발 환경이거나 위치 서비스가 없는 경우 제주도 기본 위치 사용
-      console.log("개발 환경: 제주도 기본 위치 사용");
-      fetchStoresData(defaultLocation.latitude, defaultLocation.longitude);
-    }
+    console.log("데모 버전: 제주도 기본 위치 사용");
+    fetchStoresData(defaultLocation.latitude, defaultLocation.longitude);
   }, [fetchStoresData]);
 
   // Enhanced filtering logic using category instead of menu

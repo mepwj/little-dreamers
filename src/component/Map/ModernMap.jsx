@@ -59,7 +59,7 @@ const ModernMap = ({ stores, userLocation, onStoreSelect, selectedStore }) => {
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY}&autoload=false`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.REACT_APP_KAKAO_MAP_API_KEY || '6022b3ea363825dba0253bc58c3f328c'}&autoload=false`;
       script.async = true;
       
       script.onload = () => {
