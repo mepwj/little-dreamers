@@ -1,6 +1,21 @@
 # 🍴 꼬망이들 (Little Dreamers)
-
 제주도 아동급식카드 가맹점 찾기 웹 서비스
+
+카카오테크 부트캠프 내 2박3일 해커톤 대회 & ICT 제주 이노베이션스퀘어 공공데이터셋을 활용한 AI해커톤 에 참가한 주제입니다. 
+
+기존 프로젝트를 개인으로 리팩토링하였습니다. 
+
+카카오테크 부트캠프 해커톤v1
+https://github.com/3amdasoo/jeju-little-dreamers-fe.git
+https://github.com/3amdasoo/JejuDdai-be
+https://github.com/3amdasoo/jeju-little-dreamers-scraping
+
+ICT 제주 이노베이션스퀘어 공공데이터셋을 활용한 AI해커톤 v2
+https://github.com/3amdasoo/jeju-little-dreamers-fe-v2
+
+현재 버전v3
+벡엔드를 목업(더미) 데이터로 변경하고 vercel 배포하였습니다. 
+
 
 ## 📝 프로젝트 설명
 
@@ -11,7 +26,7 @@
 
 ## 🚀 라이브 데모
 
-**배포 URL**: [little-dreamers.vercel.app](https://little-dreamers.vercel.app)
+**배포 URL**: [little-dreamers.vercel.app](https://little-dreamers-three.vercel.app)
 
 ## ✨ 주요 기능
 
